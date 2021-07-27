@@ -71,17 +71,13 @@
     "includeTableList": [
     ],
     "excludeTableList": [
-
     ],
     "excludeColumnList": [
-      "id"
     ],
     "prefix": "snh_",
     "turnType": {
-      "STRING": "LONG"
     },
     "turnField": {
-      "create_id": "DOUBLE"
     }
   }
 }

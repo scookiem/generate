@@ -72,7 +72,7 @@ public class Generate {
                 FieldInfo fieldInfo = fieldInfoFactory.getFieldInfo(columns);
                 if (fieldInfo != null) {
                     if (StrUtil.isNotEmpty(fieldInfo.getType().getPkg())) {
-                        tableInfo.getImportList().add(fieldInfo.getType().getPkg());
+                        tableInfo.getImportSet().add(fieldInfo.getType().getPkg());
                     }
                     tableInfo.getFieldInfoList().add(fieldInfo);
                 }

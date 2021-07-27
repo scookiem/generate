@@ -1,7 +1,7 @@
 package ${packages};
 
-<#list importList as import>
-    import ${import}
+<#list importSet as import>
+import ${import};
 </#list>
 
 /**
@@ -17,9 +17,9 @@ public class ${upperCamel}Entity extends BaseEntity {
 private static final long serialVersionUID = 1L;
 <#list fieldInfoList as fieldInfo>
     /**
+     * ${fieldInfo.originType}
      * ${fieldInfo.comment!"无备注"}
      */
     private ${fieldInfo.type.type} ${fieldInfo.lowerCamel};
 </#list>
-
 }

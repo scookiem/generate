@@ -5,7 +5,9 @@ import lombok.Data;
 import org.pkh.config.ConfigHolder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 表信息
@@ -50,16 +52,16 @@ public class TableInfo {
     /**
      * 导入列表
      */
-    private List<String> importList=new ArrayList<>();
+    private Set<String> importSet = new HashSet<>();
     /**
      * 注解列表
      */
-    private List<String> annotationList=new ArrayList<>();
+    private List<String> annotationList = new ArrayList<>();
 
     /**
      * 字段信息列表
      */
-    private List<FieldInfo> fieldInfoList=new ArrayList<>();
+    private List<FieldInfo> fieldInfoList = new ArrayList<>();
 
     public TableInfo(String originName, String comment) {
         this.originName = originName;

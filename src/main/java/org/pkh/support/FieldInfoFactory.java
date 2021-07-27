@@ -137,6 +137,7 @@ public class FieldInfoFactory {
             this.columnName = rs.getString("COLUMN_NAME");
             this.columnType = rs.getString("TYPE_NAME");
             this.comment = rs.getString("REMARKS");
+            this.fieldType = null;
             if (CollectionUtil.isNotEmpty(ConfigHolder.TABLE_CONFIG.getTurnField())) {
                 FieldType turnType = ConfigHolder.TABLE_CONFIG.getTurnField().get(columnName);
                 if (turnType != null) {
