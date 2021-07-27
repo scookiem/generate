@@ -55,10 +55,10 @@ public class FileGenerate implements Runnable {
             tableInfo.setPackages(fileConfig.getOutputPackage());
             /*更新*/
             if (Files.exists(path)) {
-                log.debug("{}文件已存在，更新", path.toAbsolutePath());
+                log.debug("{}文件已存在，【更新】", path.toAbsolutePath());
                 Template template = CONFIGURATION.getTemplate(fileConfig.getUpdateFileName());
             } else {
-                log.debug("{}文件不存在，新建", path.toAbsolutePath());
+                log.debug("{}文件不存在，【新建】", path.toAbsolutePath());
                 Files.createDirectories(path.getParent());
                 Files.createFile(path);
                 Template template = CONFIGURATION.getTemplate(fileConfig.getFileName());

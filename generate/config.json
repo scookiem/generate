@@ -68,11 +68,20 @@
     "delimiter": ""
   },
   "tableConfig": {
-    "includeList": [
+    "includeTableList": [
     ],
-    "excludeList": [],
+    "excludeTableList": [
+
+    ],
+    "excludeColumnList": [
+      "id"
+    ],
     "prefix": "snh_",
-    "turnType": {},
-    "turnField": {}
+    "turnType": {
+      "STRING": "LONG"
+    },
+    "turnField": {
+      "create_id": "DOUBLE"
+    }
   }
 }

@@ -17,11 +17,11 @@ public class TableConfig {
     /**
      * 包括列表
      */
-    private List<String> includeList;
+    private List<String> includeTableList;
     /**
      * 排除列表
      */
-    private List<String> excludeList;
+    private List<String> excludeTableList;
     /**
      * 排除列列表
      */

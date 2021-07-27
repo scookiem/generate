@@ -1,11 +1,14 @@
 package org.pkh;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import org.pkh.config.ConfigHolder;
 import org.pkh.info.FieldInfo;
 import org.pkh.info.TableInfo;
+import org.pkh.support.FieldInfoFactory;
 import org.pkh.support.FileGenerate;
+import org.pkh.support.TableInfoFactory;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -41,6 +44,48 @@ public class Generate {
         System.out.println("--------生成结束--------");
     }
 
+    /**
+     * 完成表信息
+     *
+     * @return {@link List<TableInfo>}
+     * @throws SQLException sqlexception异常
+     */
+    private List<TableInfo> completionTableInfo() throws SQLException {
+        ArrayList<TableInfo> tableResultList = new ArrayList<>();
+        @Cleanup
+        Connection connection = DriverManager.getConnection(ConfigHolder.DATABASE_CONFIG.getUrl(), ConfigHolder.DATABASE_CONFIG.getUsername(), ConfigHolder.DATABASE_CONFIG.getPassword());
+        DatabaseMetaData md = connection.getMetaData();
+        ResultSet rs = md.getTables(null, null, "%", new String[]{"TABLE"});
+        TableInfoFactory tableInfoFactory = new TableInfoFactory();
+        FieldInfoFactory fieldInfoFactory = new FieldInfoFactory();
+        /*表*/
+        while (rs.next()) {
+            TableInfo tableInfo = tableInfoFactory.getTableInfo(rs);
+            if (tableInfo != null) {
+                tableResultList.add(tableInfo);
+            }
+        }
+        /*字段*/
+        for (TableInfo tableInfo : tableResultList) {
+            ResultSet columns = md.getColumns(null, null, tableInfo.getOriginName(), "%");
+            while (columns.next()) {
+                FieldInfo fieldInfo = fieldInfoFactory.getFieldInfo(columns);
+                if (fieldInfo != null) {
+                    if (StrUtil.isNotEmpty(fieldInfo.getType().getPkg())) {
+                        tableInfo.getImportList().add(fieldInfo.getType().getPkg());
+                    }
+                    tableInfo.getFieldInfoList().add(fieldInfo);
+                }
+            }
+        }
+        return tableResultList;
+    }
+
+    /**
+     * 生成文件
+     *
+     * @param tableInfos 表信息
+     */
     @SneakyThrows
     private void generateFile(List<TableInfo> tableInfos) {
         ExecutorService executorService = Executors.newFixedThreadPool(tableInfos.size());
@@ -51,37 +96,5 @@ public class Generate {
         executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
     }
 
-    private List<TableInfo> completionTableInfo() throws SQLException {
-        ArrayList<TableInfo> tableResultList = new ArrayList<>();
-        @Cleanup
-        Connection connection = DriverManager.getConnection(ConfigHolder.DATABASE_CONFIG.getUrl(), ConfigHolder.DATABASE_CONFIG.getUsername(), ConfigHolder.DATABASE_CONFIG.getPassword());
-        DatabaseMetaData md = connection.getMetaData();
-        ResultSet rs = md.getTables(null, null, "%", new String[]{"TABLE"});
-        /*表*/
-        while (rs.next()) {
-            String tableName = rs.getString("TABLE_NAME");
-            if (ConfigHolder.TABLE_CONFIG.getIncludeList() != null && ConfigHolder.TABLE_CONFIG.getIncludeList().size() > 0) {
-                if (!ConfigHolder.TABLE_CONFIG.getIncludeList().contains(tableName)) {
-                    continue;
-                }
-            } else if (ConfigHolder.TABLE_CONFIG.getExcludeList() != null && ConfigHolder.TABLE_CONFIG.getExcludeList().size() > 0) {
-                if (ConfigHolder.TABLE_CONFIG.getExcludeList().contains(tableName)) {
-                    continue;
-                }
-            }
-            tableResultList.add(new TableInfo(tableName, rs.getString("REMARKS")));
-        }
-        /*字段*/
-        for (TableInfo tableInfo : tableResultList) {
-            ResultSet columns = md.getColumns(null, null, tableInfo.getOriginName(), "%");
-            while (columns.next()) {
-                String columnName = columns.getString("COLUMN_NAME");
-                if (ConfigHolder.TABLE_CONFIG.getExcludeColumnList() == null || !ConfigHolder.TABLE_CONFIG.getExcludeColumnList().contains(columnName)) {
-                    FieldInfo fieldInfo = new FieldInfo(columnName, columns.getString("TYPE_NAME"), columns.getString("REMARKS"));
-                    tableInfo.getFieldInfoList().add(fieldInfo);
-                }
-            }
-        }
-        return tableResultList;
-    }
+
 }

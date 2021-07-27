@@ -47,53 +47,21 @@ public class FieldInfo {
      */
     private List<String> annotationList;
 
-    public FieldInfo(String name, String originType, String comment) {
+    /**
+     * 字段信息
+     *
+     * @param name       的名字
+     * @param originType 来源类型
+     * @param fieldType  字段类型
+     * @param comment    评论
+     */
+    public FieldInfo(String name, String originType, FieldType fieldType, String comment) {
         this.name = name;
         this.upperCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, this.name);
         this.lowerCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name);
         this.underscore = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_UNDERSCORE, this.name);
         this.originType = originType;
+        this.type = fieldType;
         this.comment = comment;
-        this.type = coverType();
-    }
-
-    private FieldType coverType() {
-        if (containsAny("char", "text", "json", "enum")) {
-            return FieldType.STRING;
-        }
-        if (containsAny("bigint")) {
-            return FieldType.LONG;
-        }
-        if (containsAny("int")) {
-            return FieldType.INTEGER;
-        }
-        if (containsAny("date", "time")) {
-            return FieldType.DATE;
-        }
-        if (containsAny("bit","boolean")) {
-            return FieldType.BOOLEAN;
-        }
-        if (containsAny("decimal", "numeric")) {
-            return FieldType.BIG_DECIMAL;
-        }
-        if (containsAny("bytea")) {
-            return FieldType.BYTE_ARRAY;
-        }
-        if (containsAny("float")) {
-            return FieldType.FLOAT;
-        }
-        if(containsAny("double")){
-            return FieldType.DOUBLE;
-        }
-        throw new RuntimeException("未知类型");
-    }
-
-    private boolean containsAny(String... text) {
-        for (String s : text) {
-            if (this.originType.contains(s)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
