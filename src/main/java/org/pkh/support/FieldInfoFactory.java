@@ -1,9 +1,12 @@
 package org.pkh.support;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.pkh.config.ConfigHolder;
 import org.pkh.database.EFieldType;
+import org.pkh.database.FieldType;
 import org.pkh.info.FieldInfo;
 
 import java.sql.ResultSet;
@@ -14,6 +17,7 @@ import java.sql.ResultSet;
  * @author Administrator
  * @date 2021/07/26
  */
+@Slf4j
 public class FieldInfoFactory {
     private Process process;
 
@@ -130,7 +134,7 @@ public class FieldInfoFactory {
         protected String columnName;
         protected String columnType;
         protected String comment;
-        protected EFieldType fieldType;
+        protected FieldType fieldType;
 
         @SneakyThrows
         public FieldInfo getFieldInfo(ResultSet rs) {
@@ -139,13 +143,23 @@ public class FieldInfoFactory {
             this.comment = rs.getString("REMARKS");
             this.fieldType = null;
             if (CollectionUtil.isNotEmpty(ConfigHolder.TABLE_CONFIG.getTurnField())) {
-                EFieldType turnType = ConfigHolder.TABLE_CONFIG.getTurnField().get(columnName);
-                if (turnType != null) {
-                    fieldType = turnType;
+                String s = ConfigHolder.TABLE_CONFIG.getTurnField().get(columnName);
+                if (StrUtil.isNotEmpty(s)) {
+                    EFieldType eFieldType = null;
+                    try {
+                        eFieldType = EFieldType.valueOf(s);
+                    } catch (RuntimeException e) {
+                        log.debug("{}未找到预设类型", s);
+                    }
+                    if (eFieldType != null) {
+                        this.fieldType = eFieldType.getType();
+                    } else {
+                        this.fieldType = new FieldType(s, StrUtil.subAfter(s, ".", true));
+                    }
                 }
             }
             if (fieldType == null) {
-                fieldType = coverType(columnType);
+                fieldType = coverType(columnType).getType();
             }
             return process();
         }

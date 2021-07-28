@@ -38,6 +38,6 @@ public class TableConfig {
     /**
      * 将字段
      */
-    private Map<String, EFieldType> turnField;
+    private Map<String, String> turnField;
 
 }

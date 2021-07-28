@@ -78,6 +78,7 @@
     "turnType": {
     },
     "turnField": {
+      "id": "org.pkh.Test"
     }
   }
 }
