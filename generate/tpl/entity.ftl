@@ -1,5 +1,9 @@
 package ${packages};
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.pkh.application.storage.base.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 <#list importSet as import>
 import ${import};
 </#list>
@@ -14,7 +18,8 @@ import ${import};
 @TableName("${name}")
 public class ${upperCamel}Entity extends BaseEntity {
 
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
 <#list fieldInfoList as fieldInfo>
     /**
      * ${fieldInfo.originType}

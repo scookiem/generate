@@ -76,6 +76,6 @@ public class FileGenerate implements Runnable {
             outputName = StrUtil.replace(outputName, "{{lowerCamel}}", tableInfo.getLowerCamel());
             outputName = StrUtil.replace(outputName, "{{underscore}}", tableInfo.getUnderscore());
         }
-        return outputName + ".java";
+        return outputName;
     }
 }

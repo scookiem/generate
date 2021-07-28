@@ -14,7 +14,7 @@
       //输出包
       "outputPackage": "org.pkh.test.controller",
       //输出名称
-      "outputName": "{{upperCamel}}Controller"
+      "outputName": "{{upperCamel}}Controller.java"
     },
     {
       //文件
@@ -22,7 +22,7 @@
       //输出包
       "outputPackage": "org.pkh.test.service",
       //输出名称
-      "outputName": "I{{upperCamel}}Service"
+      "outputName": "I{{upperCamel}}Service.java"
     },
     {
       //文件
@@ -30,7 +30,7 @@
       //输出包
       "outputPackage": "org.pkh.test.service.impl",
       //输出名称
-      "outputName": "{{upperCamel}}Service"
+      "outputName": "{{upperCamel}}Service.java"
     },
     {
       //文件
@@ -40,7 +40,7 @@
       //输出包
       "outputPackage": "org.pkh.test.entity",
       //输出名称
-      "outputName": "{{upperCamel}}Entity"
+      "outputName": "{{upperCamel}}Entity.java"
     },
     {
       //文件
@@ -50,7 +50,7 @@
       //输出包
       "outputPackage": "org.pkh.test.dao.mapper",
       //输出名称
-      "outputName": "{{upperCamel}}Mapper"
+      "outputName": "{{upperCamel}}Mapper.xml"
     },
     {
       //文件
@@ -58,7 +58,7 @@
       //输出包
       "outputPackage": "org.pkh.test.dao",
       //输出名称
-      "outputName": "{{upperCamel}}Dao"
+      "outputName": "{{upperCamel}}Dao.java"
     }
   ],
   "globalConfig": {

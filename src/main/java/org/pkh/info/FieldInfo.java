@@ -2,7 +2,7 @@ package org.pkh.info;
 
 import com.google.common.base.CaseFormat;
 import lombok.Data;
-import org.pkh.database.FieldType;
+import org.pkh.database.EFieldType;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class FieldInfo {
     /**
      * 类型
      */
-    private FieldType type;
+    private EFieldType type;
     /**
      * 备注
      */
@@ -55,7 +55,7 @@ public class FieldInfo {
      * @param fieldType  字段类型
      * @param comment    评论
      */
-    public FieldInfo(String name, String originType, FieldType fieldType, String comment) {
+    public FieldInfo(String name, String originType, EFieldType fieldType, String comment) {
         this.name = name;
         this.upperCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, this.name);
         this.lowerCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name);
