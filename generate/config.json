@@ -64,8 +64,7 @@
   "globalConfig": {
     "rootPath": "src/main/java",
     "tplPath": "generate/tpl",
-    "author": "",
-    "delimiter": ""
+    "author": ""
   },
   "tableConfig": {
     "includeTableList": [

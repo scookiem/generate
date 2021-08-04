@@ -11,7 +11,7 @@ import ${import};
 /**
  * ${comment}
  *
- * @author ${author!"author"}
+ * @author ${author!}
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -19,12 +19,6 @@ import ${import};
 public class ${upperCamel}Entity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-    ${}
-<#list fieldInfoList as fieldInfo>
-    /**
-     * ${fieldInfo.originType}
-     * ${fieldInfo.comment!"无备注"}
-     */
-    private ${fieldInfo.type.type} ${fieldInfo.lowerCamel};
-</#list>
+
+<#include "entityField.ftl">
 }

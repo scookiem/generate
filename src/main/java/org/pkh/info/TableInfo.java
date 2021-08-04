@@ -85,5 +85,7 @@ public class TableInfo {
         this.upperCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, this.name);
         this.lowerCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name);
         this.underscore = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_UNDERSCORE, this.name);
+        this.author = ConfigHolder.GLOBAL_CONFIG.getAuthor();
+        this.delimiter = ConfigHolder.GLOBAL_CONFIG.getDelimiter();
     }
 }
