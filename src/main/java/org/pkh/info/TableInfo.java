@@ -17,6 +17,15 @@ import java.util.Set;
  */
 @Data
 public class TableInfo {
+    //额外信息
+    /**
+     * 作者
+     */
+    private String author;
+    /**
+     * 分隔符
+     */
+    private String delimiter;
     /**
      * 包
      */
@@ -63,6 +72,12 @@ public class TableInfo {
      */
     private List<FieldInfo> fieldInfoList = new ArrayList<>();
 
+    /**
+     * 表信息
+     *
+     * @param originName 原产地名称
+     * @param comment    评论
+     */
     public TableInfo(String originName, String comment) {
         this.originName = originName;
         this.comment = comment;

@@ -19,7 +19,7 @@ import ${import};
 public class ${upperCamel}Entity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
+    ${}
 <#list fieldInfoList as fieldInfo>
     /**
      * ${fieldInfo.originType}
