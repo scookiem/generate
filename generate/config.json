@@ -45,8 +45,6 @@
     {
       //文件
       "fileName": "mapper.ftl",
-      //更新时使用的文件
-      "updateFileName": "mapperUpdate.ftl",
       //输出包
       "outputPath": "org/pkh/test/dao.mapper",
       //输出名称
