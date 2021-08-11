@@ -13,7 +13,7 @@ import java.util.Map;
  * @date 2021/06/09
  */
 @Data
-public class TableConfig {
+public class TableConfig extends AbstractConfig {
     /**
      * 包括列表
      */
@@ -39,5 +39,4 @@ public class TableConfig {
      * 将字段
      */
     private Map<String, String> turnField;
-
 }

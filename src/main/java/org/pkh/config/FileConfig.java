@@ -1,10 +1,8 @@
 package org.pkh.config;
 
-import cn.hutool.core.util.StrUtil;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.pkh.Required;
-
-import java.io.File;
 
 /**
  * 文件配置
@@ -13,7 +11,8 @@ import java.io.File;
  * @date 2021/06/09
  */
 @Data
-public class FileConfig {
+@Slf4j
+public class FileConfig extends AbstractConfig {
     /**
      * 文件名称
      */
@@ -24,19 +23,14 @@ public class FileConfig {
      */
     private String updateFileName;
     /**
-     * 输出路径
+     * 输出路径，相对路径以当前路径为开始
      */
-    @Required(message = "输出路径不能为空", group = 1, least = 1)
+    @Required(message = "输出路径不能为空")
     private String outputPath;
-    /**
-     * 输出包
-     */
-    @Required(message = "输出包不能为空", group = 1, least = 1)
-    private String outputPackage;
-
     /**
      * 输出的名字
      */
+    @Required(message = "输出文件名不能为空")
     private String outputName;
 
 
@@ -52,8 +46,5 @@ public class FileConfig {
             updateFileName = updateFileName + ".ftl";
         }
         this.updateFileName = updateFileName;
-    }
-    public String getOutputPackagePath() {
-        return StrUtil.replace(this.outputPackage, ".", File.separator);
     }
 }

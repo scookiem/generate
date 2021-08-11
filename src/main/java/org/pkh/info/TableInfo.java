@@ -26,6 +26,7 @@ public class TableInfo {
      * 分隔符
      */
     private String delimiter;
+    //额外结束
     /**
      * 包
      */

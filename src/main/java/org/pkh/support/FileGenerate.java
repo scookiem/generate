@@ -51,8 +51,8 @@ public class FileGenerate implements Runnable {
     @Override
     public void run() {
         for (FileConfig fileConfig : ConfigHolder.FILE_CONFIG) {
-            Path path = Paths.get(ConfigHolder.GLOBAL_CONFIG.getRootPath(), fileConfig.getOutputPackagePath(), coverFileName(fileConfig.getOutputName()));
-            tableInfo.setPackages(fileConfig.getOutputPackage());
+            Path path = Paths.get(ConfigHolder.GLOBAL_CONFIG.getRootPath(), fileConfig.getOutputPath(), coverFileName(fileConfig.getOutputName()));
+            tableInfo.setPackages(fileConfig.getOutputPath());
             /*更新*/
             if (Files.exists(path)) {
                 log.debug("{}文件已存在，【更新】", path.toAbsolutePath());

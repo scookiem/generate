@@ -12,7 +12,7 @@
       //文件
       "fileName": "controller.ftl",
       //输出包
-      "outputPackage": "org.pkh.test.controller",
+      "outputPath": "org/pkh/test/controller",
       //输出名称
       "outputName": "{{upperCamel}}Controller.java"
     },
@@ -20,7 +20,7 @@
       //文件
       "fileName": "iservice.ftl",
       //输出包
-      "outputPackage": "org.pkh.test.service",
+      "outputPath": "org/pkh/test/service",
       //输出名称
       "outputName": "I{{upperCamel}}Service.java"
     },
@@ -28,7 +28,7 @@
       //文件
       "fileName": "service.ftl",
       //输出包
-      "outputPackage": "org.pkh.test.service.impl",
+      "outputPath": "org/pkh/test/service.impl",
       //输出名称
       "outputName": "{{upperCamel}}Service.java"
     },
@@ -38,7 +38,7 @@
       //更新时使用的文件
       "updateFileName": "entityUpdate.ftl",
       //输出包
-      "outputPackage": "org.pkh.test.entity",
+      "outputPath": "org/pkh/test/entity",
       //输出名称
       "outputName": "{{upperCamel}}Entity.java"
     },
@@ -48,7 +48,7 @@
       //更新时使用的文件
       "updateFileName": "mapperUpdate.ftl",
       //输出包
-      "outputPackage": "org.pkh.test.dao.mapper",
+      "outputPath": "org/pkh/test/dao.mapper",
       //输出名称
       "outputName": "{{upperCamel}}Mapper.xml"
     },
@@ -56,7 +56,7 @@
       //文件
       "fileName": "dao.ftl",
       //输出包
-      "outputPackage": "org.pkh.test.dao",
+      "outputPath": "org/pkh/test/dao",
       //输出名称
       "outputName": "{{upperCamel}}Dao.java"
     }

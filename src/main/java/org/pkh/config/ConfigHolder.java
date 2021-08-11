@@ -48,10 +48,14 @@ public abstract class ConfigHolder {
         String configString = getContent(path);
         JSONObject config = JSONObject.parseObject(configString);
         DATABASE_CONFIG = config.getObject("databaseConfig", DatabaseConfig.class);
+        DATABASE_CONFIG.check();
         FILE_CONFIG = config.getObject("fileConfig", new TypeReference<List<FileConfig>>() {
         });
+        FILE_CONFIG.forEach(FileConfig::check);
         GLOBAL_CONFIG = config.getObject("globalConfig", GlobalConfig.class);
+        GLOBAL_CONFIG.check();
         TABLE_CONFIG = config.getObject("tableConfig", TableConfig.class);
+        TABLE_CONFIG.check();
     }
 
     private static String getContent(String path) throws IOException {
