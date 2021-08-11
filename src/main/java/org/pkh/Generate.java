@@ -3,6 +3,7 @@ package org.pkh;
 import cn.hutool.core.util.StrUtil;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.pkh.config.ConfigHolder;
 import org.pkh.info.FieldInfo;
 import org.pkh.info.TableInfo;
@@ -26,22 +27,23 @@ import java.util.concurrent.TimeUnit;
  * @author Administrator
  * @date 2021/06/16
  */
+@Slf4j
 public class Generate {
     public static void main(String[] args) throws SQLException, IOException {
-        System.out.println("--------开始生成--------");
+        log.debug("--------开始生成--------");
         if (args == null || args.length < 1) {
             throw new RuntimeException("配置文件不能为空");
         }
         String encoding = System.getProperty("file.encoding");
         if (!encoding.equalsIgnoreCase(StandardCharsets.UTF_8.name())) {
-            System.out.printf("当前编码方式为[%s],为避免中文乱码,请使用指令[java -Dfile.encoding=UTF-8 -jar mbg %s]", encoding, args[0]);
+            log.error("当前编码方式为[{}],为避免中文乱码,请使用指令[java -Dfile.encoding=UTF-8 -jar mbg {}]", encoding, args[0]);
             return;
         }
         ConfigHolder.init(args[0]);
         Generate generate = new Generate();
         List<TableInfo> tableInfos = generate.completionTableInfo();
         generate.generateFile(tableInfos);
-        System.out.println("--------生成结束--------");
+        log.debug("--------生成结束--------");
     }
 
     /**
