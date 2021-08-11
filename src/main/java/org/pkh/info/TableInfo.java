@@ -26,11 +26,11 @@ public class TableInfo {
      * 分隔符
      */
     private String delimiter;
-    //额外结束
     /**
-     * 包
+     * 自定义
      */
-    private String packages;
+    private String customize;
+    //额外结束
     /**
      * 原产地名称
      */

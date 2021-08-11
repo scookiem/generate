@@ -1,11 +1,7 @@
-package ${packages};
-
-<#list importSet as import>
-import ${import}
-</#list>
+package org.pkh.test.controller;
 
 /**
- * ${comment}
+ * ${comment}-controller
  */
 @RestController()
 @RequestMapping("${name}")

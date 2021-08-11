@@ -28,9 +28,25 @@
       //文件
       "fileName": "service.ftl",
       //输出包
-      "outputPath": "org/pkh/test/service.impl",
+      "outputPath": "org/pkh/test/service/impl",
       //输出名称
       "outputName": "{{upperCamel}}Service.java"
+    },
+    {
+      //文件
+      "fileName": "dao.ftl",
+      //输出包
+      "outputPath": "org/pkh/test/dao",
+      //输出名称
+      "outputName": "{{upperCamel}}Dao.java"
+    },
+    {
+      //文件
+      "fileName": "mapper.ftl",
+      //输出包
+      "outputPath": "org/pkh/test/dao/mapper",
+      //输出名称
+      "outputName": "{{upperCamel}}Mapper.xml"
     },
     {
       //文件
@@ -41,22 +57,6 @@
       "outputPath": "org/pkh/test/entity",
       //输出名称
       "outputName": "{{upperCamel}}Entity.java"
-    },
-    {
-      //文件
-      "fileName": "mapper.ftl",
-      //输出包
-      "outputPath": "org/pkh/test/dao.mapper",
-      //输出名称
-      "outputName": "{{upperCamel}}Mapper.xml"
-    },
-    {
-      //文件
-      "fileName": "dao.ftl",
-      //输出包
-      "outputPath": "org/pkh/test/dao",
-      //输出名称
-      "outputName": "{{upperCamel}}Dao.java"
     }
   ],
   "globalConfig": {
