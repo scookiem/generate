@@ -1,5 +1,6 @@
 package org.pkh.config;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.pkh.Required;
@@ -22,7 +23,7 @@ public abstract class AbstractConfig {
                 field.setAccessible(true);
                 Object value = field.get(this);
                 if (value == null) {
-                    throw new RuntimeException(field.getName()+"-"+annotation.message());
+                    throw new RuntimeException(StrUtil.format("{}-{}", field.getName(), annotation.message()));
                 }
             }
         }

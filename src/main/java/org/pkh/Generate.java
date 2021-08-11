@@ -36,8 +36,7 @@ public class Generate {
         }
         String encoding = System.getProperty("file.encoding");
         if (!encoding.equalsIgnoreCase(StandardCharsets.UTF_8.name())) {
-            log.error("当前编码方式为[{}],为避免中文乱码,请使用指令[java -Dfile.encoding=UTF-8 -jar mbg {}]", encoding, args[0]);
-            return;
+            throw new RuntimeException(StrUtil.format("当前编码方式为[{}],为避免中文乱码,请使用指令[java -Dfile.encoding=UTF-8 -jar mbg {}]", encoding, args[0]));
         }
         ConfigHolder.init(args[0]);
         Generate generate = new Generate();
