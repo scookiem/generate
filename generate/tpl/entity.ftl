@@ -1,7 +1,5 @@
 package org.pkh.test.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.pkh.application.storage.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 <#list importSet as import>
@@ -14,9 +12,7 @@ import ${import};
  * @author ${author!}
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@TableName("${name}")
-public class ${upperCamel}Entity extends BaseEntity {
+public class ${upperCamel}Entity{
 
     private static final long serialVersionUID = 1L;
 
@@ -27,9 +23,9 @@ public class ${upperCamel}Entity extends BaseEntity {
      */
     private ${fieldInfo.type.type} ${fieldInfo.lowerCamel};
 </#list>
-${delimiter!}
+    ${delimiter!}
 <#if customize??>
 ${customize}
 </#if>
-${delimiter!}
+    ${delimiter!}
 }
