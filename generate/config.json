@@ -13,7 +13,7 @@
       "fileName": "entity.ftl",
       //更新时使用的文件
       "updateFileName": "entity.ftl",
-      //输出包
+      //输出路径
       "outputPath": "org/pkh/test/entity",
       //输出名称
       "outputName": "{{upperCamel}}Entity.java"

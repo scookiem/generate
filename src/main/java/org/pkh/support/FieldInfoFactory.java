@@ -142,24 +142,33 @@ public class FieldInfoFactory {
             this.columnType = rs.getString("TYPE_NAME");
             this.comment = rs.getString("REMARKS");
             this.fieldType = null;
+            /*字段转换*/
             if (CollectionUtil.isNotEmpty(ConfigHolder.TABLE_CONFIG.getTurnField())) {
-                String s = ConfigHolder.TABLE_CONFIG.getTurnField().get(columnName);
-                if (StrUtil.isNotEmpty(s)) {
-                    EFieldType eFieldType = null;
-                    try {
-                        eFieldType = EFieldType.valueOf(s);
-                    } catch (RuntimeException e) {
-                        log.debug("{}未找到预设类型", s);
+                FieldType fieldType = ConfigHolder.TABLE_CONFIG.getTurnField().get(columnName);
+                if (fieldType != null) {
+                    /*无type无pkg*/
+                    if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isBlank(fieldType.getPkg())) {
+                        throw new RuntimeException(StrUtil.format("类型或包不能全为空"));
                     }
-                    if (eFieldType != null) {
-                        this.fieldType = eFieldType.getType();
-                    } else {
-                        this.fieldType = new FieldType(s, StrUtil.subAfter(s, ".", true));
+                    /*有type 无pkg*/
+                    else if (StrUtil.isNotBlank(fieldType.getType()) && StrUtil.isBlank(fieldType.getPkg())) {
+                        try {
+                            EFieldType eFieldType = EFieldType.valueOf(fieldType.getType());
+                            this.fieldType = eFieldType.getType();
+                        } catch (RuntimeException e) {
+                            throw new RuntimeException(StrUtil.format("{}未找到预设类型,请补充完善", fieldType.getType()));
+                        }
+                    }
+                    /*无type 有pkg*/
+                    else if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isNotBlank(fieldType.getPkg())) {
+                        this.fieldType = new FieldType();
+                        this.fieldType.setType(StrUtil.subAfter(this.fieldType.getPkg(), ".", true));
+                        this.fieldType.setTsType(fieldType.getTsType());
                     }
                 }
             }
-            if (fieldType == null) {
-                fieldType = coverType(columnType).getType();
+            if (this.fieldType == null) {
+                this.fieldType = coverType(columnType).getType();
             }
             return process();
         }

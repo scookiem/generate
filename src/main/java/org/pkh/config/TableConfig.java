@@ -2,6 +2,7 @@ package org.pkh.config;
 
 import lombok.Data;
 import org.pkh.database.EFieldType;
+import org.pkh.database.FieldType;
 
 import java.util.List;
 import java.util.Map;
@@ -38,5 +39,5 @@ public class TableConfig extends AbstractConfig {
     /**
      * 将字段
      */
-    private Map<String, String> turnField;
+    private Map<String, FieldType> turnField;
 }
