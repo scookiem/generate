@@ -131,9 +131,21 @@ public class FieldInfoFactory {
      * @date 2021/07/26
      */
     private abstract class Process {
+        /**
+         * 列名
+         */
         protected String columnName;
+        /**
+         * 列类型
+         */
         protected String columnType;
+        /**
+         * 评论
+         */
         protected String comment;
+        /**
+         * 字段类型
+         */
         protected FieldType fieldType;
 
         @SneakyThrows
@@ -161,9 +173,12 @@ public class FieldInfoFactory {
                     }
                     /*无type 有pkg*/
                     else if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isNotBlank(fieldType.getPkg())) {
-                        this.fieldType = new FieldType();
-                        this.fieldType.setType(StrUtil.subAfter(this.fieldType.getPkg(), ".", true));
-                        this.fieldType.setTsType(fieldType.getTsType());
+                        fieldType.setType(StrUtil.subAfter(this.fieldType.getPkg(), ".", true));
+                        fieldType.setTsType(fieldType.getTsType());
+                        this.fieldType = fieldType;
+                    }
+                    if (StrUtil.isBlank(this.fieldType.getTsType())) {
+                        this.fieldType.setTsType("any");
                     }
                 }
             }
