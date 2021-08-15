@@ -35,6 +35,13 @@
     "turnType": {
     },
     "turnField": {
+      "owner_type": {
+        "pkg":"com.pkh.application.storage.Enum.EHistoryOwnerType"
+      },
+      "operating_type": {
+        "pkg": "com.pkh.application.storage.Enum.EHistoryOperatingType"
+
+      }
     }
   }
 }

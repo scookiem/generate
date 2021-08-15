@@ -173,12 +173,12 @@ public class FieldInfoFactory {
                     }
                     /*无type 有pkg*/
                     else if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isNotBlank(fieldType.getPkg())) {
-                        fieldType.setType(StrUtil.subAfter(this.fieldType.getPkg(), ".", true));
+                        fieldType.setType(StrUtil.subAfter(fieldType.getPkg(), ".", true));
                         fieldType.setTsType(fieldType.getTsType());
                         this.fieldType = fieldType;
                     }
                     if (StrUtil.isBlank(this.fieldType.getTsType())) {
-                        this.fieldType.setTsType("any");
+                        this.fieldType.setTsType("string");
                     }
                 }
             }
