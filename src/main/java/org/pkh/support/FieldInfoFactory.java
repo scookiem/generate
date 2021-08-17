@@ -25,19 +25,20 @@ public class FieldInfoFactory {
         /*有排除名单*/
         if (CollectionUtil.isNotEmpty(ConfigHolder.TABLE_CONFIG.getExcludeColumnList())) {
             process = new Process() {
+                @SneakyThrows
                 @Override
-                FieldInfo process() {
-                    if (ConfigHolder.TABLE_CONFIG.getExcludeColumnList().contains(columnName)) {
+                FieldInfo getFieldInfo(ResultSet rs) {
+                    if (ConfigHolder.TABLE_CONFIG.getExcludeColumnList().contains(rs.getString("COLUMN_NAME"))) {
                         return null;
                     }
-                    return new FieldInfo(columnName, columnType, fieldType, comment);
+                    return process(rs);
                 }
             };
         } else {
             process = new Process() {
                 @Override
-                FieldInfo process() {
-                    return new FieldInfo(columnName, columnType, fieldType, comment);
+                FieldInfo getFieldInfo(ResultSet rs) {
+                    return process(rs);
                 }
             };
         }
@@ -51,6 +52,72 @@ public class FieldInfoFactory {
      */
     public FieldInfo getFieldInfo(ResultSet columns) {
         return process.getFieldInfo(columns);
+    }
+
+    /**
+     * 包含任何
+     *
+     * @param text 文本
+     * @return boolean
+     */
+    private boolean containsAny(String originType, String... text) {
+        for (String s : text) {
+            if (originType.contains(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 过程
+     *
+     * @author Administrator
+     * @date 2021/07/26
+     */
+    private abstract class Process {
+        @SneakyThrows
+        public FieldInfo process(ResultSet rs) {
+            FieldInfo result = new FieldInfo();
+            result.setOriginName(rs.getString("COLUMN_NAME"));
+            result.setOriginType(rs.getString("TYPE_NAME"));
+            result.setComment(rs.getString("REMARKS"));
+            result.setNullable(rs.getInt("NULLABLE"));
+            /*字段转换*/
+            if (CollectionUtil.isNotEmpty(ConfigHolder.TABLE_CONFIG.getTurnField())) {
+                FieldType fieldType = ConfigHolder.TABLE_CONFIG.getTurnField().get(result.getOriginName());
+                if (fieldType != null) {
+                    /*无type无pkg*/
+                    if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isBlank(fieldType.getPkg())) {
+                        throw new RuntimeException(StrUtil.format("类型或包不能全为空"));
+                    }
+                    /*有type 无pkg*/
+                    else if (StrUtil.isNotBlank(fieldType.getType()) && StrUtil.isBlank(fieldType.getPkg())) {
+                        try {
+                            EFieldType eFieldType = EFieldType.valueOf(fieldType.getType());
+                            result.setType(eFieldType.getType());
+                        } catch (RuntimeException e) {
+                            throw new RuntimeException(StrUtil.format("{}未找到预设类型,请补充完善", fieldType.getType()));
+                        }
+                    }
+                    /*无type 有pkg*/
+                    else if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isNotBlank(fieldType.getPkg())) {
+                        fieldType.setType(StrUtil.subAfter(fieldType.getPkg(), ".", true));
+                        fieldType.setTsType(fieldType.getTsType());
+                        result.setType(fieldType);
+                    }
+                    if (StrUtil.isBlank(result.getType().getTsType())) {
+                        result.getType().setTsType("string");
+                    }
+                }
+            }
+            if (result.getType() == null) {
+                result.setType(coverType(result.getOriginType()).getType());
+            }
+            return result;
+        }
+
+        abstract FieldInfo getFieldInfo(ResultSet rs);
     }
 
     /**
@@ -107,87 +174,5 @@ public class FieldInfoFactory {
             }
         }
         return fieldType;
-    }
-
-    /**
-     * 包含任何
-     *
-     * @param text 文本
-     * @return boolean
-     */
-    private boolean containsAny(String originType, String... text) {
-        for (String s : text) {
-            if (originType.contains(s)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 过程
-     *
-     * @author Administrator
-     * @date 2021/07/26
-     */
-    private abstract class Process {
-        /**
-         * 列名
-         */
-        protected String columnName;
-        /**
-         * 列类型
-         */
-        protected String columnType;
-        /**
-         * 评论
-         */
-        protected String comment;
-        /**
-         * 字段类型
-         */
-        protected FieldType fieldType;
-
-        @SneakyThrows
-        public FieldInfo getFieldInfo(ResultSet rs) {
-            this.columnName = rs.getString("COLUMN_NAME");
-            this.columnType = rs.getString("TYPE_NAME");
-            this.comment = rs.getString("REMARKS");
-            this.fieldType = null;
-            /*字段转换*/
-            if (CollectionUtil.isNotEmpty(ConfigHolder.TABLE_CONFIG.getTurnField())) {
-                FieldType fieldType = ConfigHolder.TABLE_CONFIG.getTurnField().get(columnName);
-                if (fieldType != null) {
-                    /*无type无pkg*/
-                    if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isBlank(fieldType.getPkg())) {
-                        throw new RuntimeException(StrUtil.format("类型或包不能全为空"));
-                    }
-                    /*有type 无pkg*/
-                    else if (StrUtil.isNotBlank(fieldType.getType()) && StrUtil.isBlank(fieldType.getPkg())) {
-                        try {
-                            EFieldType eFieldType = EFieldType.valueOf(fieldType.getType());
-                            this.fieldType = eFieldType.getType();
-                        } catch (RuntimeException e) {
-                            throw new RuntimeException(StrUtil.format("{}未找到预设类型,请补充完善", fieldType.getType()));
-                        }
-                    }
-                    /*无type 有pkg*/
-                    else if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isNotBlank(fieldType.getPkg())) {
-                        fieldType.setType(StrUtil.subAfter(fieldType.getPkg(), ".", true));
-                        fieldType.setTsType(fieldType.getTsType());
-                        this.fieldType = fieldType;
-                    }
-                    if (StrUtil.isBlank(this.fieldType.getTsType())) {
-                        this.fieldType.setTsType("string");
-                    }
-                }
-            }
-            if (this.fieldType == null) {
-                this.fieldType = coverType(columnType).getType();
-            }
-            return process();
-        }
-
-        abstract FieldInfo process();
     }
 }

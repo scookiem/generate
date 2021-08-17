@@ -2,6 +2,7 @@ package org.pkh.info;
 
 import com.google.common.base.CaseFormat;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.pkh.database.FieldType;
 
 import java.util.List;
@@ -13,11 +14,12 @@ import java.util.List;
  * @date 2021/06/09
  */
 @Data
+@NoArgsConstructor
 public class FieldInfo {
     /**
      * 名字
      */
-    private String name;
+    private String originName;
     /**
      * 大驼峰
      */
@@ -48,20 +50,16 @@ public class FieldInfo {
     private List<String> annotationList;
 
     /**
-     * 字段信息
-     *
-     * @param name       的名字
-     * @param originType 来源类型
-     * @param fieldType  字段类型
-     * @param comment    评论
+     * 0 (columnNoNulls) - 该列不允许为空
+     * 1 (columnNullable) - 该列允许为空
+     * 2 (columnNullableUnknown) - 不确定该列是否为空
      */
-    public FieldInfo(String name, String originType, FieldType fieldType, String comment) {
-        this.name = name;
-        this.upperCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, this.name);
-        this.lowerCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name);
-        this.underscore = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_UNDERSCORE, this.name);
-        this.originType = originType;
-        this.type = fieldType;
-        this.comment = comment;
+    private int nullable;
+
+    public void setOriginName(String originName) {
+        this.originName = originName;
+        this.upperCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, this.originName);
+        this.lowerCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.originName);
+        this.underscore = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_UNDERSCORE, this.originName);
     }
 }

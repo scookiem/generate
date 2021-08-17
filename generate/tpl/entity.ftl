@@ -21,6 +21,9 @@ public class ${upperCamel}Entity{
      * ${fieldInfo.originType}
      * ${fieldInfo.comment!"无备注"}
      */
+    <#if fieldInfo.nullable==0>
+    @NotNull
+    </#if>
     private ${fieldInfo.type.type} ${fieldInfo.lowerCamel};
 </#list>
     ${delimiter!}
