@@ -75,6 +75,12 @@ public class Generate {
                     if (StrUtil.isNotEmpty(fieldInfo.getType().getPkg())) {
                         tableInfo.getImportSet().add(fieldInfo.getType().getPkg());
                     }
+                    if (fieldInfo.getNullable() == 0) {
+                        tableInfo.setNullable(false);
+                    }
+                    if ("Date".equals(fieldInfo.getType().getType())) {
+                        tableInfo.setHasDate(true);
+                    }
                     tableInfo.getFieldInfoList().add(fieldInfo);
                 }
             }

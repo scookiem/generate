@@ -30,6 +30,14 @@ public class TableInfo {
      * 自定义
      */
     private String customize;
+    /**
+     * 有日期
+     */
+    private boolean hasDate = false;
+    /**
+     * 可以为空
+     */
+    private boolean nullable = true;
     //额外结束
     /**
      * 原产地名称
