@@ -10,13 +10,13 @@
   "fileConfig": [
     {
       //文件
-      "fileName": "entity.ftl",
+      "fileName": "tsEntity.ftl",
       //更新时使用的文件
-      "updateFileName": "entity.ftl",
-      //输出路径
-      "outputPath": "org/pkh/test/entity",
+      "updateFileName": "tsEntity.ftl",
+      //输出包
+      "outputPath": "\\D:\\projects\\mine\\weapp-storage\\src\\entity",
       //输出名称
-      "outputName": "{{upperCamel}}Entity.java"
+      "outputName": "{{upperCamel}}Entity.tsx"
     }
   ],
   "globalConfig": {
@@ -35,13 +35,6 @@
     "turnType": {
     },
     "turnField": {
-      "owner_type": {
-        "pkg":"com.pkh.application.storage.Enum.EHistoryOwnerType"
-      },
-      "operating_type": {
-        "pkg": "com.pkh.application.storage.Enum.EHistoryOperatingType"
-
-      }
     }
   }
 }

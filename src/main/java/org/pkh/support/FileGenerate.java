@@ -54,7 +54,12 @@ public class FileGenerate implements Runnable {
     @Override
     public void run() {
         for (FileConfig fileConfig : ConfigHolder.FILE_CONFIG) {
-            Path outputPath = Paths.get(ConfigHolder.GLOBAL_CONFIG.getRootPath(), fileConfig.getOutputPath(), coverFileName(fileConfig.getOutputName()));
+            Path outputPath = null;
+            if (fileConfig.getOutputPath().startsWith("\\")) {
+                outputPath = Paths.get(StrUtil.removePrefix(fileConfig.getOutputPath(),"\\"), coverFileName(fileConfig.getOutputName()));
+            } else {
+                outputPath = Paths.get(ConfigHolder.GLOBAL_CONFIG.getRootPath(), fileConfig.getOutputPath(), coverFileName(fileConfig.getOutputName()));
+            }
             /*更新*/
             if (Files.exists(outputPath)) {
                 if (StrUtil.isNotBlank(fileConfig.getUpdateFileName())) {
