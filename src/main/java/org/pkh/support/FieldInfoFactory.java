@@ -142,7 +142,7 @@ public class FieldInfoFactory {
             skip = true;
         }
         if (!skip && containsAny(originType, "date", "time")) {
-            fieldType = EFieldType.LOCAL_DATE_TIME;
+            fieldType = EFieldType.DATE;
             skip = true;
         }
         if (!skip && containsAny(originType, "bit", "boolean", "bool", "tinyint")) {
