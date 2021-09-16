@@ -29,6 +29,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class Generate {
+    @SneakyThrows
     public static void main(String[] args) throws SQLException, IOException {
         log.debug("--------开始生成--------");
         if (args == null || args.length < 1) {
@@ -51,8 +52,12 @@ public class Generate {
      * @return {@link List<TableInfo>}
      * @throws SQLException sqlexception异常
      */
+    @SneakyThrows
     private List<TableInfo> completionTableInfo() throws SQLException {
         ArrayList<TableInfo> tableResultList = new ArrayList<>();
+        if (ConfigHolder.DATABASE_CONFIG.getUrl().contains("mysql")) {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
         @Cleanup
         Connection connection = DriverManager.getConnection(ConfigHolder.DATABASE_CONFIG.getUrl(), ConfigHolder.DATABASE_CONFIG.getUsername(), ConfigHolder.DATABASE_CONFIG.getPassword());
         DatabaseMetaData md = connection.getMetaData();
