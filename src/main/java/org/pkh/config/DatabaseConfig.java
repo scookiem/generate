@@ -14,6 +14,7 @@ public class DatabaseConfig extends AbstractConfig {
     /**
      * 驱动名
      */
+    @Required(message = "driverName不能为空")
     private String driverName;
     /**
      * url

@@ -55,9 +55,7 @@ public class Generate {
     @SneakyThrows
     private List<TableInfo> completionTableInfo() throws SQLException {
         ArrayList<TableInfo> tableResultList = new ArrayList<>();
-        if (ConfigHolder.DATABASE_CONFIG.getUrl().contains("mysql")) {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        }
+        Class.forName(ConfigHolder.DATABASE_CONFIG.getDriverName());
         @Cleanup
         Connection connection = DriverManager.getConnection(ConfigHolder.DATABASE_CONFIG.getUrl(), ConfigHolder.DATABASE_CONFIG.getUsername(), ConfigHolder.DATABASE_CONFIG.getPassword());
         DatabaseMetaData md = connection.getMetaData();
