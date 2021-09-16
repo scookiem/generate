@@ -62,7 +62,7 @@ public class FieldInfoFactory {
      */
     private boolean containsAny(String originType, String... text) {
         for (String s : text) {
-            if (originType.contains(s)) {
+            if (originType.contains(s.toLowerCase())) {
                 return true;
             }
         }
@@ -94,7 +94,7 @@ public class FieldInfoFactory {
                     /*有type 无pkg*/
                     else if (StrUtil.isNotBlank(fieldType.getType()) && StrUtil.isBlank(fieldType.getPkg())) {
                         try {
-                            EFieldType eFieldType = EFieldType.valueOf(fieldType.getType());
+                            EFieldType eFieldType = EFieldType.valueOf(fieldType.getType().toLowerCase());
                             result.setType(eFieldType.getType());
                         } catch (RuntimeException e) {
                             throw new RuntimeException(StrUtil.format("{}未找到预设类型,请补充完善", fieldType.getType()));
@@ -112,7 +112,7 @@ public class FieldInfoFactory {
                 }
             }
             if (result.getType() == null) {
-                result.setType(coverType(result.getOriginType()).getType());
+                result.setType(coverType(result.getOriginType().toLowerCase()).getType());
             }
             return result;
         }
@@ -129,7 +129,7 @@ public class FieldInfoFactory {
     private EFieldType coverType(String originType) {
         EFieldType fieldType = null;
         boolean skip = false;
-        if (containsAny(originType, "char", "text", "json", "enum")) {
+        if (containsAny(originType, "char", "text", "json", "enum", "varchar")) {
             fieldType = EFieldType.STRING;
             skip = true;
         }
@@ -145,7 +145,7 @@ public class FieldInfoFactory {
             fieldType = EFieldType.DATE;
             skip = true;
         }
-        if (!skip && containsAny(originType, "bit", "boolean","bool","tinyint")) {
+        if (!skip && containsAny(originType, "bit", "boolean", "bool", "tinyint")) {
             fieldType = EFieldType.BOOLEAN;
             skip = true;
         }

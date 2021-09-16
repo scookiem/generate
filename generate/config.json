@@ -2,9 +2,9 @@
   //数据库配置
   "databaseConfig": {
     //url
-    "url": "jdbc:postgresql://139.155.178.174:5432/shounahui?useSSL=false",
-    "username": "postgres",
-    "password": "Postgres#2021"
+    "url": "jdbc:mysql://211.149.167.9:3306/rent?nullCatalogMeansCurrent=true",
+    "username": "root",
+    "password": "P@ssw0rd"
   },
   //生成文件配置
   "fileConfig": [
