@@ -145,7 +145,7 @@ public class FieldInfoFactory {
             fieldType = EFieldType.DATE;
             skip = true;
         }
-        if (!skip && containsAny(originType, "bit", "boolean","bool")) {
+        if (!skip && containsAny(originType, "bit", "boolean","bool","tinyint")) {
             fieldType = EFieldType.BOOLEAN;
             skip = true;
         }
