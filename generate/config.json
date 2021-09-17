@@ -27,8 +27,10 @@
   "tableConfig": {
     "includeTableList": [
     ],
+    "includePrefix": "auth_",
     "excludeTableList": [
     ],
+    "excludePrefix": "auth_",
     "excludeColumnList": [
     ],
     "prefix": "snh_",

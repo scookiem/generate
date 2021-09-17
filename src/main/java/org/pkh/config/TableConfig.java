@@ -16,9 +16,17 @@ import java.util.Map;
 @Data
 public class TableConfig extends AbstractConfig {
     /**
+     * 包括前缀
+     */
+    private String includePrefix;
+    /**
      * 包括列表
      */
     private List<String> includeTableList;
+    /**
+     * 排除前缀
+     */
+    private String excludePrefix;
     /**
      * 排除列表
      */
