@@ -1,5 +1,6 @@
 package org.pkh.info;
 
+import cn.hutool.core.util.StrUtil;
 import com.google.common.base.CaseFormat;
 import lombok.Data;
 import org.pkh.config.ConfigHolder;
@@ -90,7 +91,7 @@ public class TableInfo {
     public TableInfo(String originName, String comment) {
         this.originName = originName;
         this.comment = comment;
-        this.name = originName.replace(this.tablePrefix, "");
+        this.name = StrUtil.isBlank(this.tablePrefix) ? originName : originName.replace(this.tablePrefix, "");
         this.upperCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, this.name);
         this.lowerCamel = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name);
         this.underscore = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_UNDERSCORE, this.name);
