@@ -1,7 +1,6 @@
 
 package org.pkh.database;
 
-import com.sun.istack.internal.NotNull;
 import org.pkh.info.TableInfo;
 
 import java.util.List;
@@ -19,6 +18,5 @@ public abstract class IDatabaseQuery {
      *
      * @return {@link List<TableInfo>}
      */
-    @NotNull
     public abstract List<TableInfo> queryTables();
 }

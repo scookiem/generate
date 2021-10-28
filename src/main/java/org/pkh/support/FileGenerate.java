@@ -56,8 +56,9 @@ public class FileGenerate implements Runnable {
         for (FileConfig fileConfig : ConfigHolder.FILE_CONFIG) {
             Path outputPath = null;
             if (fileConfig.getOutputPath().startsWith("\\")) {
-                outputPath = Paths.get(StrUtil.removePrefix(fileConfig.getOutputPath(),"\\"), coverFileName(fileConfig.getOutputName()));
+                outputPath = Paths.get(StrUtil.removePrefix(fileConfig.getOutputPath(), "\\"), coverFileName(fileConfig.getOutputName()));
             } else {
+                tableInfo.setPackageName(StrUtil.replace(fileConfig.getOutputPath(), "/", "."));
                 outputPath = Paths.get(ConfigHolder.GLOBAL_CONFIG.getRootPath(), fileConfig.getOutputPath(), coverFileName(fileConfig.getOutputName()));
             }
             /*更新*/

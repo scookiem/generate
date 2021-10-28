@@ -39,6 +39,7 @@ public class TableInfo {
      * 可以为空
      */
     private boolean nullable = true;
+    private String packageName;
     //额外结束
     /**
      * 原产地名称

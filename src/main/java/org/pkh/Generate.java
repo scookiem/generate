@@ -11,9 +11,11 @@ import org.pkh.support.FieldInfoFactory;
 import org.pkh.support.FileGenerate;
 import org.pkh.support.TableInfoFactory;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -30,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class Generate {
     @SneakyThrows
-    public static void main(String[] args) throws SQLException, IOException {
+    public static void main(String[] args) {
         log.debug("--------开始生成--------");
         if (args == null || args.length < 1) {
             throw new RuntimeException("配置文件不能为空");
@@ -50,10 +52,9 @@ public class Generate {
      * 完成表信息
      *
      * @return {@link List<TableInfo>}
-     * @throws SQLException sqlexception异常
      */
     @SneakyThrows
-    private List<TableInfo> completionTableInfo() throws SQLException {
+    private List<TableInfo> completionTableInfo() {
         ArrayList<TableInfo> tableResultList = new ArrayList<>();
         Class.forName(ConfigHolder.DATABASE_CONFIG.getDriverName());
         @Cleanup
@@ -102,9 +103,6 @@ public class Generate {
         tableInfos.forEach(tableInfo -> {
             executorService.execute(new FileGenerate(tableInfo));
         });
-        executorService.shutdown();
         executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
     }
-
-
 }
