@@ -2,41 +2,96 @@
   //数据库配置
   "databaseConfig": {
     //url
-    "url": "jdbc:mysql://211.149.167.9:3306/rent?nullCatalogMeansCurrent=true",
+    "url": "jdbc:mysql://47.109.64.183:3306/zhfc-sps?nullCatalogMeansCurrent=true&characterEncoding=utf8&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai",
     "username": "root",
-    "password": "P@ssw0rd"
+    "password": "P@ssw0rd",
+    "driverName": "com.mysql.cj.jdbc.Driver"
   },
   //生成文件配置
   "fileConfig": [
     {
       //文件
-      "fileName": "tsEntity.ftl",
-      //更新时使用的文件
-      "updateFileName": "tsEntity.ftl",
+      "fileName": "iservice.ftl",
       //输出包
-      "outputPath": "\\D:\\projects\\mine\\weapp-storage\\src\\entity",
+      "outputPath": "com/rexyn/sps/bank/service",
       //输出名称
-      "outputName": "{{upperCamel}}Entity.tsx"
+      "outputName": "I{{upperCamel}}Service.java"
+    },
+    {
+      //文件
+      "fileName": "service.ftl",
+      //输出包
+      "outputPath": "com/rexyn/sps/bank/service/impl",
+      //输出名称
+      "outputName": "{{upperCamel}}ServiceImpl.java"
+    },
+    {
+      //文件
+      "fileName": "dao.ftl",
+      //输出包
+      "outputPath": "com/rexyn/sps/bank/dao",
+      //输出名称
+      "outputName": "{{upperCamel}}Dao.java"
+    },
+    {
+      //文件
+      "fileName": "mapper.ftl",
+      //输出包
+      "outputPath": "com/rexyn/sps/bank/dao/mapper",
+      //输出名称
+      "outputName": "{{upperCamel}}Mapper.xml"
+    },
+    {
+      //文件
+      "fileName": "entity.ftl",
+      //更新时使用的文件
+      "updateFileName": "entity.ftl",
+      //输出包
+      "outputPath": "com/rexyn/sps/bank/entity",
+      //输出名称
+      "outputName": "{{upperCamel}}.java"
     }
+    //ts
+    //    {
+    //      //文件
+    //      "fileName": "tsEntity.ftl",
+    //      //更新时使用的文件
+    //      "updateFileName": "tsEntity.ftl",
+    //      //输出包
+    //      "outputPath": "\\D:\\projects\\mine\\weapp-storage\\src\\entity",
+    //      //输出名称
+    //      "outputName": "{{upperCamel}}Entity.tsx"
+    //    }
   ],
   "globalConfig": {
-    "rootPath": "src/main/java",
-    "tplPath": "generate/tpl",
-    "author": ""
+    "rootPath": "../src/main/java",
+    "tplPath": "tpl",
+    "author": "ljh"
   },
   "tableConfig": {
     "includeTableList": [
+      "sps_books_building",
+      "sps_books_contract"
     ],
-    "includePrefix": "auth_",
+    "includePrefix": "",
     "excludeTableList": [
     ],
-    "excludePrefix": "auth_",
     "excludeColumnList": [
+      "id",
+      "create_time",
+      "create_id",
+      "update_time",
+      "update_id",
+      "status",
+      "deleted"
     ],
-    "prefix": "snh_",
+    "prefix": "sps_",
     "turnType": {
     },
     "turnField": {
+      "funds_type": {
+        "pkg": "com.rexyn.sps.message.enums.EMessageType"
+      }
     }
   }
 }

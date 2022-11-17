@@ -85,11 +85,7 @@ public class FieldInfoFactory {
             result.setNullable(rs.getInt("NULLABLE"));
             /*字段转换*/
             if (CollectionUtil.isNotEmpty(ConfigHolder.TABLE_CONFIG.getTurnField())) {
-                FieldType originFieldType = ConfigHolder.TABLE_CONFIG.getTurnField().get(result.getOriginName());
-                FieldType fieldType = new FieldType();
-                fieldType.setPkg(originFieldType.getPkg());
-                fieldType.setType(originFieldType.getType());
-                fieldType.setTsType(originFieldType.getTsType());
+                FieldType fieldType = ConfigHolder.TABLE_CONFIG.getTurnField().get(result.getOriginName());
                 if (fieldType != null) {
                     /*无type无pkg*/
                     if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isBlank(fieldType.getPkg())) {
@@ -108,6 +104,9 @@ public class FieldInfoFactory {
                     else if (StrUtil.isBlank(fieldType.getType()) && StrUtil.isNotBlank(fieldType.getPkg())) {
                         fieldType.setType(StrUtil.subAfter(fieldType.getPkg(), ".", true));
                         fieldType.setTsType(fieldType.getTsType());
+                        result.setType(fieldType);
+                    }
+                    if (result.getType() == null) {
                         result.setType(fieldType);
                     }
                     if (StrUtil.isBlank(result.getType().getTsType())) {
