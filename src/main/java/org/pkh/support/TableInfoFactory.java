@@ -74,15 +74,13 @@ public class TableInfoFactory {
             };
             return;
         }
-        {
-            process = new Process() {
-                @SneakyThrows
-                @Override
-                public TableInfo getTableInfo(ResultSet rs) {
-                    return new TableInfo(rs.getString("TABLE_NAME"), rs.getString("REMARKS"));
-                }
-            };
-        }
+        process = new Process() {
+            @SneakyThrows
+            @Override
+            public TableInfo getTableInfo(ResultSet rs) {
+                return new TableInfo(rs.getString("TABLE_NAME"), rs.getString("REMARKS"));
+            }
+        };
     }
 
 

@@ -39,10 +39,13 @@ public class TableInfo {
      * 可以为空
      */
     private boolean nullable = true;
+    /**
+     * 程序包名称
+     */
     private String packageName;
     //额外结束
     /**
-     * 原产地名称
+     * 原名称
      */
     private String originName;
     /**

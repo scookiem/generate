@@ -103,6 +103,8 @@ public class Generate {
         tableInfos.forEach(tableInfo -> {
             executorService.execute(new FileGenerate(tableInfo));
         });
-        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+        executorService.shutdown();
+        while (!executorService.awaitTermination(1, TimeUnit.SECONDS)) {
+        }
     }
 }
