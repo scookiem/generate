@@ -11,14 +11,6 @@
   "fileConfig": [
     {
       //文件
-      "fileName": "bizController.ftl",
-      //输出包
-      "outputPath": "com/rexyn/rent/server/example/controller",
-      //输出名称
-      "outputName": "{{upperCamel}}Controller.java"
-    },
-    {
-      //文件
       "fileName": "controller.ftl",
       //输出包
       "outputPath": "com/rexyn/rent/server/example/controller",
@@ -61,8 +53,9 @@
     }
   ],
   "globalConfig": {
-    "rootPath": "../src/main/java",
-    "tplPath": "tpl",
+    //todo 改为正式使用路径
+    "rootPath": "src/main/java",
+    "tplPath": "generate/tpl",
     "author": "linjiahang"
   },
   "tableConfig": {

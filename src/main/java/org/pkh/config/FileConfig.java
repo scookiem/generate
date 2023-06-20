@@ -33,7 +33,6 @@ public class FileConfig extends AbstractConfig {
     @Required(message = "输出文件名不能为空")
     private String outputName;
 
-
     public void setFileName(String fileName) {
         if (!fileName.endsWith(".ftl")) {
             fileName = fileName + ".ftl";
