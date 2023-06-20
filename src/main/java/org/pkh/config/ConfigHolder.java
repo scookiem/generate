@@ -63,12 +63,12 @@ public abstract class ConfigHolder {
         File file = filePath.toFile();
         Preconditions.checkState(file.exists(), path + "不存在");
         StringBuilder sb = new StringBuilder();
-        @Cleanup
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        String buffer;
-        while ((buffer = bufferedReader.readLine()) != null) {
-            if (!buffer.trim().startsWith("//")) {
-                sb.append(buffer);
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            String buffer;
+            while ((buffer = bufferedReader.readLine()) != null) {
+                if (!buffer.trim().startsWith("//")) {
+                    sb.append(buffer);
+                }
             }
         }
         return sb.toString();

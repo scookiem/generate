@@ -41,11 +41,11 @@ public class TableConfig extends AbstractConfig {
      */
     private String prefix;
     /**
-     * 把类型
+     * 按类型转换
      */
     private Map<EFieldType, EFieldType> turnType;
     /**
-     * 将字段
+     * 按字段转换
      */
     private Map<String, FieldType> turnField;
 }

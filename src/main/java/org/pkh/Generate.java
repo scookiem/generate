@@ -61,7 +61,6 @@ public class Generate {
         Connection connection = DriverManager.getConnection(ConfigHolder.DATABASE_CONFIG.getUrl(), ConfigHolder.DATABASE_CONFIG.getUsername(), ConfigHolder.DATABASE_CONFIG.getPassword());
         DatabaseMetaData md = connection.getMetaData();
         ResultSet rs = md.getTables(null, null, "%", new String[]{"TABLE"});
-        FieldInfoFactory fieldInfoFactory = new FieldInfoFactory();
         /*表*/
         while (rs.next()) {
             TableInfo tableInfo = TableInfoFactory.getTableInfo(rs);
@@ -73,7 +72,7 @@ public class Generate {
         for (TableInfo tableInfo : tableResultList) {
             ResultSet columns = md.getColumns(null, null, tableInfo.getOriginName(), "%");
             while (columns.next()) {
-                FieldInfo fieldInfo = fieldInfoFactory.getFieldInfo(columns);
+                FieldInfo fieldInfo = FieldInfoFactory.getFieldInfo(columns);
                 if (fieldInfo != null) {
                     if (StrUtil.isNotEmpty(fieldInfo.getType().getPkg())) {
                         tableInfo.getImportSet().add(fieldInfo.getType().getPkg());
