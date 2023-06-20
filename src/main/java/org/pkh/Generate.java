@@ -61,11 +61,10 @@ public class Generate {
         Connection connection = DriverManager.getConnection(ConfigHolder.DATABASE_CONFIG.getUrl(), ConfigHolder.DATABASE_CONFIG.getUsername(), ConfigHolder.DATABASE_CONFIG.getPassword());
         DatabaseMetaData md = connection.getMetaData();
         ResultSet rs = md.getTables(null, null, "%", new String[]{"TABLE"});
-        TableInfoFactory tableInfoFactory = new TableInfoFactory();
         FieldInfoFactory fieldInfoFactory = new FieldInfoFactory();
         /*表*/
         while (rs.next()) {
-            TableInfo tableInfo = tableInfoFactory.getTableInfo(rs);
+            TableInfo tableInfo = TableInfoFactory.getTableInfo(rs);
             if (tableInfo != null) {
                 tableResultList.add(tableInfo);
             }
